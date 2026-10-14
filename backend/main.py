@@ -52,9 +52,13 @@ async def add_security_headers(request: Request, call_next):
 
 
 # -----------------------------------------------------------------------------
-# CORS Configuration
+# CORS Configuration & Compression
 # NOTE: CORS is a browser security policy, NOT authentication or authorization.
 # -----------------------------------------------------------------------------
+from fastapi.middleware.gzip import GZipMiddleware
+
+app.add_middleware(GZipMiddleware, minimum_size=500)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.allowed_origins,
